@@ -9,5 +9,27 @@ saved_models/
 *.joblib
 *.keras
 
-# اگر دیتاست حجیمه:
 data/
+
+# artifacts / outputs
+artifacts_3/
+results/
+saved_models/
+*.keras
+*.h5
+*.pkl
+*.joblib
+*.xlsx
+
+# data (never commit datasets)
+data/
+**/*.npz
+
+# python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# env / local
+.env
+.vscode/

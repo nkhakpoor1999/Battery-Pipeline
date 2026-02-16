@@ -15,8 +15,8 @@ from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
 from .utils import set_seed, ensure_dir, save_json, now_tag
-from .data import build_rul_dataset_time
-from .models import build_rul_model_time
+from .data import build_rul_dataset_seq_lstm
+from .models import build_rul_model_seq_lstm
 
 
 def groupkfold_train_eval(
@@ -39,7 +39,7 @@ def groupkfold_train_eval(
 
     set_seed(seed)
 
-    X, y, groups = build_rul_dataset_time(
+    X, y, groups = build_rul_dataset_seq_lstm(
         folder=data_path,
         eol_threshold=eol_threshold,
         savgol_window=savgol_window,
@@ -59,7 +59,7 @@ def groupkfold_train_eval(
         X_tr_sc = scaler.fit_transform(X_tr.reshape(-1, F)).reshape(X_tr.shape)
         X_va_sc = scaler.transform(X_va.reshape(-1, F)).reshape(X_va.shape)
 
-        model = build_rul_model_time(W, F, l2_reg=l2_reg)
+        model = build_rul_model_seq_lstm(W, F, l2_reg=l2_reg)
 
         early_stop = EarlyStopping(monitor="val_loss", patience=early_stop_patience, restore_best_weights=True)
         reduce_lr = ReduceLROnPlateau(monitor="val_loss", factor=reduce_lr_factor,
@@ -128,7 +128,7 @@ def train_final_model(
 
     set_seed(seed)
 
-    X, y, groups = build_rul_dataset_time(
+    X, y, groups = build_rul_dataset_seq_lstm(
         folder=data_path,
         eol_threshold=eol_threshold,
         savgol_window=savgol_window,
@@ -140,7 +140,7 @@ def train_final_model(
     scaler = StandardScaler()
     X_sc = scaler.fit_transform(X.reshape(-1, F)).reshape(X.shape)
 
-    model = build_rul_model_time(W, F, l2_reg=l2_reg)
+    model = build_rul_model_seq_lstm(W, F, l2_reg=l2_reg)
 
     hist = model.fit(X_sc, y, epochs=int(final_epochs), batch_size=batch_size, verbose=verbose)
 

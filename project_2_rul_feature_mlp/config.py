@@ -1,0 +1,14 @@
+# config.py
+RANDOM_SEED = 42
+
+# Preprocessing / filters
+FS = 1.0
+CUTOFF = 0.05
+FILTER_ORDER = 3
+WINDOW_SIZE = 21
+
+# Training defaults
+DEFAULT_EPOCHS = 150
+DEFAULT_BATCH_SIZE = 64
+DEFAULT_N_SPLITS = 3
+DEFAULT_L2_REG = 1e-4

@@ -83,7 +83,7 @@ def load_battery_npz(file_path: Path, savgol_window: int = 21, savgol_poly: int 
     }
 
 
-def build_rul_dataset_time(
+def build_rul_dataset_seq_lstm(
     folder: Path,
     eol_threshold: float = 0.8,
     savgol_window: int = 21,
