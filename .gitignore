@@ -33,3 +33,26 @@ __pycache__/
 # env / local
 .env
 .vscode/
+
+
+__pycache__/
+*.pyc
+
+# outputs
+results/
+saved_models/
+artifacts_3/
+
+# models
+*.keras
+*.h5
+*.joblib
+
+# data
+*.npz
+data/
+datasets/
+
+# Project 1 outputs
+project_1_brand_classifier/artifacts_brand/
+artifacts_brand/
