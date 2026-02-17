@@ -1,72 +1,78 @@
-🔋 Battery Brand Classification
+# 🔋 Battery Brand Classification
 
 A feature-based neural network classifier for identifying battery dataset/brand from cycle-level measurements.
 
 This module is designed as a preprocessing stage for RUL and degradation modeling pipelines.
 
-🎯 Key Features
+---
 
-Cycle-level statistical feature extraction
+## 🎯 Key Features
 
-dV/dSOC feature engineering
+- Cycle-level statistical feature extraction  
+- dV/dSOC feature engineering  
+- Leakage-free battery-level split (GroupShuffleSplit)  
+- Class imbalance handling  
+- Reproducible training (fixed seed)  
+- CLI-based training & inference  
+- Exportable artifacts for deployment  
 
-Leakage-free battery-level split (GroupShuffleSplit)
+---
 
-Class imbalance handling
+## 🧠 Model
 
-Reproducible training (fixed seed)
+- 3-layer MLP (ReLU)  
+- L2 regularization  
+- EarlyStopping + LR scheduling  
+- Battery-level validation split  
 
-CLI-based training & inference
+---
 
-Exportable artifacts for deployment
+## 📊 Validation Performance
 
-🧠 Model
+- Accuracy ≈ 97%  
+- Balanced Accuracy ≈ 95%  
+- Weighted F1 ≈ 0.97  
 
-3-layer MLP (ReLU)
+---
 
-L2 regularization
+## 🚀 Training
 
-EarlyStopping + LR scheduling
-
-Battery-level validation split
-
-📊 Validation Performance
-
-Accuracy ≈ 97%
-
-Balanced Accuracy ≈ 95%
-
-Weighted F1 ≈ 0.97
-
-🚀 Training
-
+```bash
 python project_1_brand_classifier/train.py \
-    --data_dir "PATH_TO_DATABASE"
+  --data_dir "PATH_TO_DATABASE"
+```
 
-🔎 Inference
+---
 
+## 🔎 Inference
+
+```bash
 python project_1_brand_classifier/predict.py \
-    --artifacts_dir project_1_brand_classifier/artifacts_brand \
-    --file "PATH_TO_NEW_BATTERY.npz"
+  --artifacts_dir project_1_brand_classifier/artifacts_brand \
+  --file "PATH_TO_NEW_BATTERY.npz"
+```
 
 Outputs:
 
-Per-class probabilities
+- Per-class probabilities  
+- Final predicted brand  
+- Confidence score  
 
-Final predicted brand
+---
 
-Confidence score
+## 🛠 Tech Stack
 
-🛠 Tech Stack
+Python · TensorFlow/Keras · NumPy · SciPy · Scikit-learn  
 
-Python · TensorFlow/Keras · NumPy · SciPy · Scikit-learn
+---
 
-📂 Structure
+## 📂 Structure
 
+```text
 project_1_brand_classifier/
 ├── dataset.py
 ├── model.py
 ├── train.py
 ├── predict.py
 └── utils.py
-
+```
