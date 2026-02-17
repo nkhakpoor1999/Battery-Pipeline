@@ -120,7 +120,8 @@ def main():
     ll = log_loss(y_val, val_probs, labels=all_labels)
 
     cm = confusion_matrix(y_val, val_pred, labels=all_labels)
-    cm_norm = cm.astype(float) / cm.sum(axis=1, keepdims=True)
+    den = cm.sum(axis=1, keepdims=True)
+    cm_norm = np.divide(cm.astype(float), den, out=np.zeros_like(cm, dtype=float), where=den != 0)
     cm_norm = np.nan_to_num(cm_norm)
 
     metrics = {
@@ -152,7 +153,7 @@ if __name__ == "__main__":
     if len(sys.argv) == 1:
         sys.argv.extend([
             "--data_dir", r"D:\Uni\Thesis\code & data\Battery\Battery Project\database",
-            "--out_dir", r"project_1_brand_classifier\artifacts_brand"
+            "--out_dir", r"artifacts_brand"
         ])
 
     main()
