@@ -136,3 +136,19 @@ Battery Data → Sequence Builder → LSTM Regression → RUL Prediction
 Complements:
 - Project 1: Dataset/Brand Classification
 - Project 2: Feature-based MLP Baseline
+
+## 📊 Evaluation Results
+
+### OXFORD Dataset
+
+![OXFORD Holdout](outputs/holdout_true_pred_oxford.png)
+
+**CV Summary:** `outputs/cv_summary_oxford.json`
+
+---
+
+### Lab-Li-EVE Dataset
+
+![EVE Holdout](outputs/holdout_true_pred_eve.png)
+
+**CV Summary:** `outputs/cv_summary_eve.json`
