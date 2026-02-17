@@ -18,15 +18,6 @@ This module is designed as a preprocessing stage for RUL and degradation modelin
 
 ---
 
-## 🧠 Model
-
-- 3-layer MLP (ReLU)  
-- L2 regularization  
-- EarlyStopping + LR scheduling  
-- Battery-level validation split  
-
----
-
 ## 📊 Validation Performance
 
 - Accuracy ≈ 97%  
@@ -57,12 +48,6 @@ Outputs:
 - Per-class probabilities  
 - Final predicted brand  
 - Confidence score  
-
----
-
-## 🛠 Tech Stack
-
-Python · TensorFlow/Keras · NumPy · SciPy · Scikit-learn  
 
 ---
 

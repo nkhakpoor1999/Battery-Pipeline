@@ -1,18 +1,70 @@
-# Battery RUL Prediction with LSTM (Thesis Code)
+# 🔋 Battery RUL Prediction Pipeline
 
-This repository contains a reproducible pipeline for Remaining Useful Life (RUL) prediction of Li-ion batteries
-using a sequence model (LSTM) trained on per-cycle features.
+A modular machine learning framework for battery dataset classification and Remaining Useful Life (RUL) prediction.
 
-## Features
-- End-to-end pipeline: dataset building → GroupKFold CV (battery-wise split) → final training → model export
-- Configurable EOL threshold (e.g., 0.80 / 0.85)
-- Saves:
-  - CV fold metrics (`results/.../cv_folds.csv`)
-  - CV summary (`results/.../cv_summary.json`)
-  - Final trained model (`saved_models/.../rul_lstm.keras`)
-  - Scaler + metadata (`scaler.joblib`, `meta.joblib`, `meta.json`)
-  - Plots (`cv_epochs.png`, `holdout_true_pred.png`)
+This repository includes three complementary modeling stages:
 
-## Installation
-```bash
-pip install -r requirements.txt
+1. **Project 1: Dataset Classification** 
+2. **Project 2: Feature-based RUL Regression**  
+3. **Project 3: Sequence-based RUL Prediction** 
+
+---
+
+## 📊 Data & Preprocessing
+
+This project integrates multiple heterogeneous battery datasets, including:
+
+- **NASA Battery Dataset**
+- **Oxford Battery Degradation Dataset**
+- **MIT Battery Dataset**
+- **Laboratory datasets collected and tested under controlled experimental conditions**
+  - Lab-Li-EVE
+  - Lab-Li-NMC
+  - Lab-Li-LCO
+
+  ### 🔬 Preprocessing Overview
+
+All datasets were systematically preprocessed before modeling.
+
+Only the **discharge phase** of each cycle was retained, as it contains the most informative degradation behavior.
+
+Preprocessing included:
+
+- Cycle segmentation  
+- SOH computation and EOL detection  
+- Derivative signal construction (dV/dSOC, dQ/dV, dT/dV)  
+- Noise filtering and smoothing  
+- Curve length standardization via interpolation  
+- Consistent conversion to structured `.npz` format  
+
+All models operate on standardized `.npz` files.  
+Dataset-specific preprocessing scripts are intentionally excluded.
+
+## 📂 Project Structure
+
+```
+project_1_brand_classifier/      # Dataset classification
+project_2_rul_feature_mlp/       # Feature-based RUL regression
+project_3_rul_lstm/              # Sequence-based RUL (LSTM)
+```
+Detailed explanations for each module are provided in the respective project-level README files.
+
+---
+
+## 🛠 Tech Stack
+
+Python · TensorFlow/Keras · NumPy · SciPy · Scikit-learn · Pandas
+
+---
+
+## 🔍 Engineering Highlights
+
+- Battery-level data leakage prevention  
+- GroupKFold cross-validation  
+- Feature ablation and subset search  
+- Reproducible training  
+- Model + scaler artifact persistence  
+
+---
+
+This repository demonstrates structured battery analytics workflows from feature engineering to deep sequence modeling.

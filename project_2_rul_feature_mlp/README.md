@@ -2,8 +2,6 @@
 
 A machine learning pipeline for Remaining Useful Life (RUL) prediction using engineered cycle-level features and a fully connected neural network.
 
-This module focuses on interpretable feature-based degradation modeling before moving to sequence-based deep learning approaches.
-
 ---
 
 ## 🎯 Objective
@@ -16,16 +14,6 @@ Given battery cycle data (`.npz` files), the pipeline:
 - Performs battery-level cross-validation
 - Selects optimal feature groups via ablation + search
 - Trains a final regression model
-
----
-
-## 🧠 Model
-
-- Multi-Layer Perceptron (64 → 32 → 16)
-- ReLU activation
-- L2 regularization
-- MSE loss (regression)
-- Median-best-epoch selection from GroupKFold CV
 
 ---
 
@@ -61,7 +49,7 @@ python project_2_rul_feature_mlp/train.py
 Dataset configuration is controlled via:
 
 ```python
-DATASET_KEY = "NASA"
+DATASET_KEY = "NASA" # MIT / OXFORD / Lab-Li-LCO / Lab-Li-NMC / Lab-Li-EVE*
 ```
 
 ---
@@ -93,12 +81,6 @@ This normalizes RUL between 0 and 1 for stable regression training.
 
 ---
 
-## 🛠 Tech Stack
-
-Python · TensorFlow/Keras · NumPy · SciPy · Scikit-learn · Pandas
-
----
-
 ## 📂 Structure
 
 ```
@@ -112,10 +94,4 @@ project_2_rul_feature_mlp/
 └── artifacts.py
 ```
 
----
 
-## 📌 Positioning in Pipeline
-
-Battery Data → Feature Engineering → Feature Selection → MLP Regression → RUL Prediction
-
-This module provides an interpretable baseline before sequence-based LSTM modeling (Project 3).

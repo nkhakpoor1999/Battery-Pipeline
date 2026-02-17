@@ -78,7 +78,4 @@ if __name__ == "__main__":
     if len(sys.argv) == 1:
         sys.argv.extend([
             "--artifacts_dir", r"artifacts_brand",
-            "--file", r"D:\Uni\Thesis\code & data\Battery\Battery Project\new\NMC_1.npz",
-        ])
-    main()
-
+            "--file", r"D:\Uni\Thesis\code & data\Battery\Battery Project\new\NMC_1.npz", #new battery

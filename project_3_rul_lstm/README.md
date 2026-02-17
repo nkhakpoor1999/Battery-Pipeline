@@ -1,34 +1,138 @@
-# Sequence-Based Battery RUL Prediction (LSTM)
+# 🔋 Project 3 — Sequence-based RUL Prediction (LSTM)
 
-This project predicts **Remaining Useful Life (RUL)** of lithium-ion batteries using a **Long Short-Term Memory (LSTM)** network.  
-Unlike the feature-based MLP approach, this model learns directly from **cycle-level time-series sequences**.
+An end-to-end deep learning pipeline for Remaining Useful Life (RUL) prediction using per-cycle sequences and an LSTM regression model.
 
-## Method Overview
+This module extends the feature-based baseline (Project 2) by learning temporal/shape representations directly from cycle-level curves.
 
-- **State of Health (SoH)** is computed as `SoH = Q / Qmax`.
-- **End-of-Life (EOL)** is defined as the cycle where `SoH ≤ eol_threshold`.
-- The model predicts a normalized target:  
-  `RUL_ratio = (EOL - cycle) / EOL`.
+---
 
-Each cycle is represented as a multivariate sequence including voltage and differential signals (e.g., dQ/dV, dV/dSOC, dT/dV).
+## 🎯 Objective
 
-## Model
+Given preprocessed battery `.npz` files, the pipeline:
 
-A stacked LSTM architecture is used:
+- Builds per-cycle sequences with multiple channels (e.g., voltage, dQ/dV, dV/dSOC, dT/dV)
+- Defines End-of-Life (EOL) using an SOH threshold
+- Trains an LSTM model to predict normalized RUL ratio
+- Evaluates using battery-level cross-validation (GroupKFold)
+- Trains a final model using the median best epoch from CV
+- Saves model + scaler + metadata for reproducible inference
 
-- LSTM layers for temporal modeling
-- Dense layer with ReLU activation
-- Linear output layer for regression
+---
 
-Loss: Mean Squared Error (MSE)  
-Metric: Mean Absolute Error (MAE)
+## 📊 Validation Strategy (Leakage-Free)
 
-## Validation
+- **GroupKFold** split (group = battery file name)
+- EarlyStopping + ReduceLROnPlateau during CV
+- Final epochs = median best epoch across folds
 
-**GroupKFold** is applied at the battery level to prevent data leakage and ensure realistic generalization across unseen batteries.
+Outputs:
+- `results/<RUN_ID>/cv_folds.csv`
+- `results/<RUN_ID>/cv_summary.json`
 
-## How to Run
+---
 
-Train:
+## 🔬 Input Representation
+
+For each cycle `c`, the model consumes a sequence:
+
+- Shape: `(W, F)`
+  - `W`: number of points per cycle
+  - `F`: number of channels
+
+Default channels (configurable):
+- `voltage`
+- `dqdv`
+- `dv_dsoc`
+- `dtdv` 
+
+---
+
+## ▶️ Training
+
+Select dataset in `train.py`:
+
+```python
+DATASET_KEY = "NASA"  # MIT / OXFORD / Lab-Li-LCO / Lab-Li-NMC / Lab-Li-EVE*
+```
+
+Ensure dataset root is set in `dataset_configs.py`.
+
+Run:
+
 ```bash
-python train.py
+python project_3_rul_lstm/train.py
+```
+
+### Saved Artifacts
+
+```
+project_3_rul_lstm/
+├── results/<RUN_ID>/
+│   ├── cv_folds.csv
+│   └── cv_summary.json
+└── saved_models/<RUN_ID>/
+    ├── rul_lstm.keras
+    ├── scaler.joblib
+    ├── meta.joblib
+    └── meta.json
+```
+
+`meta.json` contains:
+- dataset key
+- EOL threshold
+- feature list
+- final epochs
+- training metrics
+
+---
+
+## 🔎 Evaluate on a New Battery
+
+```bash
+python project_3_rul_lstm/evaluate.py \
+  --model_dir "project_3_rul_lstm/saved_models/<RUN_ID>" \
+  --battery "PATH_TO_NEW_BATTERY.npz"
+```
+
+Outputs:
+- Ratio-level metrics (R², MAE, RMSE)
+- Cycle-level metrics
+- `holdout_true_pred.png` (True vs Predicted RUL ratio)
+
+---
+
+## 📦 Data Preprocessing
+
+All datasets used here were preprocessed into a standardized `.npz` format prior to modeling, including:
+
+- Signal cleaning and alignment
+- SOH computation and EOL detection
+- Derivative feature construction (dV/dSOC, dQ/dV, dT/dV)
+- Smoothing and noise handling
+- Cycle-level consistency checks
+
+Preprocessing scripts are intentionally excluded to keep the repository focused on modeling and evaluation.
+
+---
+
+## 📂 Structure
+
+```
+project_3_rul_lstm/
+├── train.py
+├── evaluate.py
+├── dataset.py
+├── model.py
+├── dataset_configs.py
+└── utils.py
+```
+
+---
+
+## 📌 Positioning in Pipeline
+
+Battery Data → Sequence Builder → LSTM Regression → RUL Prediction
+
+Complements:
+- Project 1: Dataset/Brand Classification
+- Project 2: Feature-based MLP Baseline
