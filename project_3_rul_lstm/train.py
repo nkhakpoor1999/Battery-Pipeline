@@ -160,7 +160,7 @@ def train_final_model(
 if __name__ == "__main__":
     set_seed(42)
 
-    DATASET_KEY = "NASA"   
+    DATASET_KEY = "Lab-Li-EVE"   
 
     if DATASET_KEY not in DATASET_CONFIGS:
         raise KeyError(

@@ -9,7 +9,11 @@ import matplotlib.pyplot as plt
 
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 
-from .data import load_battery_npz, compute_eol
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent))
+
+from dataset import load_battery_npz,compute_eol
 
 def evaluate_on_battery(
     model,
@@ -69,18 +73,32 @@ def evaluate_on_battery(
         "y_pred_ratio": y_pred_ratio,
     }
 
-def plot_true_pred(y_true: np.ndarray, y_pred: np.ndarray, out_path: Path, title: str) -> None:
+def plot_true_pred(y_true, y_pred, out_path: Path, title: str):
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    y_true = np.asarray(y_true).reshape(-1)
+    y_pred = np.asarray(y_pred).reshape(-1)
+
+    cycles = np.arange(len(y_true)) #FOR OXFORD: * 100
+
     plt.figure()
-    plt.plot(y_true, label="True")
-    plt.plot(y_pred, label="Pred")
-    plt.xlabel("Cycle index (0..EOL)")
+
+    plt.plot(cycles, y_true, label="True", color='black')
+
+    plt.scatter(cycles, y_pred, label="Pred", s=20)
+
+    plt.xlabel("Cycle number")
     plt.ylabel("RUL ratio")
     plt.title(title)
     plt.legend()
+    plt.grid(True)
+
     out_path.parent.mkdir(parents=True, exist_ok=True)
     plt.tight_layout()
     plt.savefig(out_path, dpi=200)
     plt.close()
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -115,4 +133,13 @@ def main():
                    title=f"Holdout: {res['battery']}")
 
 if __name__ == "__main__":
+    import sys
+
+    if len(sys.argv) == 1:
+        sys.argv.extend([
+            "--model_dir", r"saved_models\Lab-Li-EVE_eol0.8_20260217_000943", #model name
+            "--battery",   r"D:\Uni\Thesis\code & data\Battery\Battery Project\new\EVE_8_B.npz", #new battery path
+        ])
+
     main()
+

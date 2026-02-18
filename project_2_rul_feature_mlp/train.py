@@ -81,10 +81,10 @@ def run_dataset_pipeline(folder, dataset_name, out_dir, eol_threshold, n_splits,
 if __name__ == "__main__":
     set_seed()
 
-    DATASET_KEY = "NASA"   #dataset_name
+    DATASET_KEY = "Lab-Li-EVE"   #dataset_name
     cfg = DATASET_CONFIGS[DATASET_KEY]
 
-    full_path = os.path.join(DATA_ROOT, cfg["folder"])
+    full_path = os.path.join( DATA_ROOT, cfg["folder"])
 
     res = run_dataset_pipeline(
         folder=full_path,

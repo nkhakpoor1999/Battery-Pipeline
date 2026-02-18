@@ -72,10 +72,32 @@ def main():
     class_names = [id_to_name.get(int(i), f"Class-{int(i)}") for i in class_ids]
     print("\nPer-cycle summary:", Counter(class_names))
 
+    print("\nPer-cycle summary:", Counter(class_names))
+
+    # -------- Save results to file --------
+    out_dir = Path("outputs_brand")
+    out_dir.mkdir(exist_ok=True)
+
+    out_file = out_dir / f"pred_{file_path.stem}.txt"
+
+    with open(out_file, "w", encoding="utf-8") as f:
+        f.write("Battery class probabilities (avg over cycles):\n")
+        for cid, p in enumerate(mean_probs):
+            f.write(f"  {id_to_name.get(cid, f'Class-{cid}')}: {p:.4f}\n")
+
+        f.write(f"\nFinal class: {final_label} (confidence={final_conf:.4f})\n")
+        f.write(f"\nPer-cycle summary: {Counter(class_names)}\n")
+
+    print(f"\nSaved results to: {out_file.resolve()}")
+
 
 if __name__ == "__main__":
     import sys
     if len(sys.argv) == 1:
         sys.argv.extend([
             "--artifacts_dir", r"artifacts_brand",
-            "--file", r"D:\Uni\Thesis\code & data\Battery\Battery Project\new\NMC_1.npz", #new battery
+            "--file", r"D:\Uni\Thesis\code & data\Battery\Battery Project\new\EVE_8_B.npz",  #new battery
+    ])
+        
+        
+    main()

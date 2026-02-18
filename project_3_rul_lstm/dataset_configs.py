@@ -22,7 +22,7 @@ DATASET_CONFIGS = {
         "out_dir": "artifacts_3",
         "eol_threshold": 0.80,
         "n_splits": 3,
-        "epochs": 10,
+        "epochs": 100,
         "batch_size": 64,
         "verbose": 0,
     },

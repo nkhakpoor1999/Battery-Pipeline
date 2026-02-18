@@ -95,8 +95,8 @@ def evaluate_new_battery_like_before_2(new_battery_path, dataset_name, out_dir, 
 
 if __name__ == "__main__":
     out = evaluate_new_battery_like_before_2(
-        new_battery_path="new/EVE_8_B.npz",
-        dataset_name="Lab-Li-EVE",
+        new_battery_path=r"D:\Uni\Thesis\code & data\Battery\Battery Project\new\OXFORD_8.npz",
+        dataset_name="OXFORD",
         out_dir="artifacts_3",
         save_pred=True,
         clip_ratio_pred=True,
