@@ -2,7 +2,7 @@
 
 A feature-based neural network classifier for identifying battery dataset/brand from cycle-level measurements.
 
-This module is designed as a preprocessing stage for RUL and degradation modeling pipelines.
+This module serves as the first stage of the overall pipeline, enabling dataset identification and selection of the corresponding RUL prediction model tailored to that battery dataset family. It functions as a preprocessing step for RUL and degradation modeling workflows.
 
 ---
 

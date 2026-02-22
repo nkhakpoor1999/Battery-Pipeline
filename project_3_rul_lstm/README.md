@@ -1,6 +1,6 @@
 # 🔋 Project 3 — Sequence-based RUL Prediction (LSTM)
 
-An end-to-end deep learning pipeline for Remaining Useful Life (RUL) prediction using per-cycle sequences and an LSTM regression model.
+An end-to-end deep learning pipeline for RUL prediction using per-cycle sequences and an LSTM regression model.
 
 This module extends the feature-based baseline (Project 2) by learning temporal/shape representations directly from cycle-level curves.
 
@@ -11,7 +11,7 @@ This module extends the feature-based baseline (Project 2) by learning temporal/
 Given preprocessed battery `.npz` files, the pipeline:
 
 - Builds per-cycle sequences with multiple channels (e.g., voltage, dQ/dV, dV/dSOC, dT/dV)
-- Defines End-of-Life (EOL) using an SOH threshold
+- Defines EOL using an SOH threshold
 - Trains an LSTM model to predict normalized RUL ratio
 - Evaluates using battery-level cross-validation (GroupKFold)
 - Trains a final model using the median best epoch from CV
@@ -99,22 +99,9 @@ Outputs:
 - Cycle-level metrics
 - `holdout_true_pred.png` (True vs Predicted RUL ratio)
 
+This enables practical deployment of the trained model for real battery prognosis.
 ---
 
-## 📦 Data Preprocessing
-
-All datasets used here were preprocessed into a standardized `.npz` format prior to modeling, including:
-
-- Signal cleaning and alignment
-- SOH computation and EOL detection
-- Derivative feature construction (dV/dSOC, dQ/dV, dT/dV)
-- Smoothing and noise handling
-- Cycle-level consistency checks
-
-Preprocessing scripts are intentionally excluded to keep the repository focused on modeling and evaluation.
-
-
----
 
 ## 📌 Positioning in Pipeline
 

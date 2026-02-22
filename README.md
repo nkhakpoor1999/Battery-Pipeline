@@ -5,7 +5,7 @@ A modular machine learning framework for battery dataset classification and Rema
 This repository includes three complementary modeling stages:
 
 1. **Project 1: Dataset Classification** 
-2. **Project 2: Feature-based RUL Regression**  
+2. **Project 2: Feature-based RUL Prediction**  
 3. **Project 3: Sequence-based RUL Prediction** 
 
 ---
@@ -17,7 +17,7 @@ This project integrates multiple heterogeneous battery datasets, including:
 - **NASA Battery Dataset**
 - **Oxford Battery Degradation Dataset**
 - **MIT Battery Dataset**
-- **Laboratory datasets collected and tested under controlled experimental conditions**
+- **Laboratory datasets collected and tested under controlled experimental conditions in KNTU Battery Testing Laboratory**
   - Lab-Li-EVE
   - Lab-Li-NMC
   - Lab-Li-LCO
@@ -31,7 +31,7 @@ Only the **discharge phase** of each cycle was retained, as it contains the most
 Preprocessing included:
 
 - Cycle segmentation  
-- SOH computation and EOL detection  
+- State Of Health (SOH) computation and End-of-Life (EOL) detection  
 - Derivative signal construction (dV/dSOC, dQ/dV, dT/dV)  
 - Noise filtering and smoothing  
 - Curve length standardization via interpolation  
@@ -44,8 +44,8 @@ Dataset-specific preprocessing scripts are intentionally excluded.
 
 ```
 project_1_brand_classifier/      # Dataset classification
-project_2_rul_feature_mlp/       # Feature-based RUL regression
-project_3_rul_lstm/              # Sequence-based RUL (LSTM)
+project_2_rul_feature_mlp/       # Feature-based RUL Prediction
+project_3_rul_lstm/              # Sequence-based RUL Prediction
 ```
 Detailed explanations for each module are provided in the respective project-level README files.
 
